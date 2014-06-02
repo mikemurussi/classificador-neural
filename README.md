@@ -1,4 +1,4 @@
 classificador-neural
 ====================
 
-Classificador Neural de Imagens
+Ferramenta de Classificação Neural de Imagens
