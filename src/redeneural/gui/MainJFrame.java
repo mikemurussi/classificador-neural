@@ -1,5 +1,7 @@
 package redeneural.gui;
 
+import VolumeViewer.Volume_Viewer;
+import ij.plugin.FolderOpener;
 import redeneural.classificador.ClassificadorImagem;
 import redeneural.mlp.Rede;
 import java.awt.BorderLayout;
@@ -48,6 +50,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private Backpropagation backpropagation;
     private final RedeJPanel redeJPanel = new RedeJPanel();
     private final AmostrasJPanel amostrasJPanel;
+    private final DelimitarAreaJPanel delimitarAreaJPanel;
     private final ClassesJPanel classesJPanel;
     private Grafico grafico;
     private boolean isTreinando = false;
@@ -67,20 +70,22 @@ public class MainJFrame extends javax.swing.JFrame {
     public MainJFrame() {
         initComponents();
 
-        btnPararTreino.setEnabled(false);
+        this.btnPararTreino.setEnabled(false);
 
-        projeto = new Projeto();
-        amostrasJPanel = new AmostrasJPanel(projeto);
-        classesJPanel = new ClassesJPanel(projeto);
+        this.projeto = new Projeto();
+        this.amostrasJPanel = new AmostrasJPanel(projeto);
+        this.delimitarAreaJPanel = new DelimitarAreaJPanel(projeto);
+        this.classesJPanel = new ClassesJPanel(projeto);
 
-        lblTreinamentoIteracoes.setText(null);
-        lblTreinamentoEMQ.setText(null);
+        this.lblTreinamentoIteracoes.setText(null);
+        this.lblTreinamentoEMQ.setText(null);
 
-        jTabbedPane.insertTab("Rede", null, redeJPanel, null, 1);
-        jTabbedPane.insertTab("Classes", null, classesJPanel, null, 2);
-        jTabbedPane.insertTab("Amostras", null, amostrasJPanel, null, 3);
+        this.jTabbedPane.insertTab("Rede", null, this.redeJPanel, null, 1);
+        this.jTabbedPane.insertTab("Classes", null, this.classesJPanel, null, 2);
+        this.jTabbedPane.insertTab("Amostras", null, this.amostrasJPanel, null, 3);
+        this.jTabbedPane.insertTab("Delimitar Área", null, this.delimitarAreaJPanel, null, 7);
         
-        jTabbedPane.setSelectedIndex(0);
+        this.jTabbedPane.setSelectedIndex(0);
 
         this.grafico = new Grafico();
         this.jPanelGrafico.add(grafico, BorderLayout.CENTER);
@@ -98,7 +103,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         this.fileChooserProjeto = FileChooserUtil.getNewFileChooser(FileChooserUtil.FILE_FILTER_PROJETO);
 
-        jTabbedPane.addChangeListener(new ChangeListener() {
+        this.jTabbedPane.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 if (jTabbedPane.getSelectedComponent() instanceof UpdateContent) {
@@ -198,6 +203,7 @@ public class MainJFrame extends javax.swing.JFrame {
         lblClassificacaoDuracao = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         btnClassificarSequenciaParar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         panelVolume = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         edtSequenciaVolume = new javax.swing.JTextField();
@@ -294,7 +300,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel13.setText("Limite de iterações");
 
-        edtLimiteIteracoes.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1000), Integer.valueOf(1), null, Integer.valueOf(1)));
+        edtLimiteIteracoes.setModel(new javax.swing.SpinnerNumberModel(1000, 1, null, 1));
 
         jLabel14.setText("Limite erro (EMQ)");
 
@@ -312,7 +318,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel16.setText("Semente de inicialização dos pesos");
 
-        edtSementeAleatoria.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        edtSementeAleatoria.setModel(new javax.swing.SpinnerNumberModel(0, 0, null, 1));
 
         btnPararTreino.setText("Parar");
         btnPararTreino.addActionListener(new java.awt.event.ActionListener() {
@@ -697,6 +703,13 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        jButton1.setText("Volume Viewer");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolumeViewerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout panelClassificacaoLayout = new javax.swing.GroupLayout(panelClassificacao);
         panelClassificacao.setLayout(panelClassificacaoLayout);
         panelClassificacaoLayout.setHorizontalGroup(
@@ -738,10 +751,6 @@ public class MainJFrame extends javax.swing.JFrame {
                                         .addComponent(lblClassificacaoDuracao)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel21))))
-                            .addGroup(panelClassificacaoLayout.createSequentialGroup()
-                                .addComponent(btnClassificarSequencia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnClassificarSequenciaParar))
                             .addComponent(chkMarcarFundo)
                             .addGroup(panelClassificacaoLayout.createSequentialGroup()
                                 .addComponent(jLabel17)
@@ -750,7 +759,13 @@ public class MainJFrame extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCorFundo))
                             .addComponent(jLabel10)
-                            .addComponent(btnClassificar))
+                            .addComponent(btnClassificar)
+                            .addGroup(panelClassificacaoLayout.createSequentialGroup()
+                                .addComponent(btnClassificarSequencia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnClassificarSequenciaParar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -784,7 +799,8 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClassificarSequencia)
-                    .addComponent(btnClassificarSequenciaParar))
+                    .addComponent(btnClassificarSequenciaParar)
+                    .addComponent(jButton1))
                 .addGap(18, 18, 18)
                 .addComponent(chkMarcarFundo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -807,7 +823,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel20)
                     .addComponent(lblClassificacaoDuracao)
                     .addComponent(jLabel21))
-                .addContainerGap(143, Short.MAX_VALUE))
+                .addContainerGap(142, Short.MAX_VALUE))
         );
 
         panelClassificacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCorFundo, lblCorFundo});
@@ -840,13 +856,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jLabel24.setText("Resolução");
 
-        edtVoxelSizeX.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), Double.valueOf(0.0d), null, Double.valueOf(0.1d)));
+        edtVoxelSizeX.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 0.1d));
         edtVoxelSizeX.setPreferredSize(new java.awt.Dimension(80, 20));
 
-        edtVoxelSizeY.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), Double.valueOf(0.0d), null, Double.valueOf(0.1d)));
+        edtVoxelSizeY.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 0.1d));
         edtVoxelSizeY.setPreferredSize(new java.awt.Dimension(80, 20));
 
-        edtVoxelSizeZ.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), Double.valueOf(0.0d), null, Double.valueOf(0.1d)));
+        edtVoxelSizeZ.setModel(new javax.swing.SpinnerNumberModel(0.0d, 0.0d, null, 0.1d));
         edtVoxelSizeZ.setPreferredSize(new java.awt.Dimension(80, 20));
 
         jLabel25.setText("xyz µm");
@@ -1281,6 +1297,13 @@ public class MainJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCalcularVolumeActionPerformed
 
+    private void btnVolumeViewerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolumeViewerActionPerformed
+        FolderOpener fo = new FolderOpener();
+        fo.run(this.fileChooserDiretorio != null && this.fileChooserDiretorio.getSelectedFile() != null ? (this.fileChooserDiretorio.getSelectedFile().getAbsolutePath()): null);
+        Volume_Viewer vv = new Volume_Viewer();
+        vv.run(null);
+    }//GEN-LAST:event_btnVolumeViewerActionPerformed
+
     private void setProjeto(Projeto p) {
         this.projeto = p;
         atualizaPesos();
@@ -1349,6 +1372,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JSpinner edtVoxelSizeX;
     private javax.swing.JSpinner edtVoxelSizeY;
     private javax.swing.JSpinner edtVoxelSizeZ;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
