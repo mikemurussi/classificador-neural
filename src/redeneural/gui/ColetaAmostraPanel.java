@@ -212,6 +212,7 @@ public class ColetaAmostraPanel extends javax.swing.JPanel implements UpdateCont
         btnLimparSelecaoAtual = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         btnPixelTool = new javax.swing.JToggleButton();
+        btnPixelTool1 = new javax.swing.JToggleButton();
         btnMagicWandTool = new javax.swing.JToggleButton();
         edtMagicWandValue = new javax.swing.JSpinner();
         jSeparator4 = new javax.swing.JToolBar.Separator();
@@ -297,7 +298,6 @@ public class ColetaAmostraPanel extends javax.swing.JPanel implements UpdateCont
 
         ferramentasGroup.add(btnPixelTool);
         btnPixelTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redeneural/gui/images/pixel-tool.png"))); // NOI18N
-        btnPixelTool.setSelected(true);
         btnPixelTool.setToolTipText("Ferramenta seleção de Pixel");
         btnPixelTool.setFocusable(false);
         btnPixelTool.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -308,6 +308,20 @@ public class ColetaAmostraPanel extends javax.swing.JPanel implements UpdateCont
             }
         });
         jToolBar1.add(btnPixelTool);
+
+        ferramentasGroup.add(btnPixelTool1);
+        btnPixelTool1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redeneural/gui/images/pixel-delete-tool.png"))); // NOI18N
+        btnPixelTool1.setSelected(true);
+        btnPixelTool1.setToolTipText("Ferramenta seleção de Pixel");
+        btnPixelTool1.setFocusable(false);
+        btnPixelTool1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPixelTool1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPixelTool1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPixelTool1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(btnPixelTool1);
 
         ferramentasGroup.add(btnMagicWandTool);
         btnMagicWandTool.setIcon(new javax.swing.ImageIcon(getClass().getResource("/redeneural/gui/images/magic-wand-tool.png"))); // NOI18N
@@ -322,7 +336,7 @@ public class ColetaAmostraPanel extends javax.swing.JPanel implements UpdateCont
         });
         jToolBar1.add(btnMagicWandTool);
 
-        edtMagicWandValue.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(2), null, null, Integer.valueOf(1)));
+        edtMagicWandValue.setModel(new javax.swing.SpinnerNumberModel(2, null, null, 1));
         edtMagicWandValue.setToolTipText("Limiar (Magic Wand)");
         edtMagicWandValue.setMaximumSize(new java.awt.Dimension(40, 20));
         edtMagicWandValue.setMinimumSize(new java.awt.Dimension(40, 20));
@@ -582,6 +596,10 @@ public class ColetaAmostraPanel extends javax.swing.JPanel implements UpdateCont
         }
     }//GEN-LAST:event_btnLimparSelecaoAtualActionPerformed
 
+    private void btnPixelTool1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPixelTool1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPixelTool1ActionPerformed
+
     private void setFerramentaSelecionada(Ferramenta ferramentaSelecionada) {
         if (!this.ferramentaSelecionada.equals(ferramentaSelecionada)) {
             this.ferramentaSelecionada = ferramentaSelecionada;
@@ -602,6 +620,7 @@ public class ColetaAmostraPanel extends javax.swing.JPanel implements UpdateCont
     private javax.swing.JButton btnLimparSelecaoAtual;
     private javax.swing.JToggleButton btnMagicWandTool;
     private javax.swing.JToggleButton btnPixelTool;
+    private javax.swing.JToggleButton btnPixelTool1;
     private javax.swing.JButton btnRemoverClasse;
     private javax.swing.JButton btnSalvarSelecao;
     private javax.swing.JComboBox comboClasse;

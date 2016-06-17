@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.01
@@ -52,10 +52,10 @@ public class Volume {
 	private ImageProcessor ip;
 	private Control control;
 	private ImagePlus imp;
-	private Volume_Viewer vv; 
+	private VisualizadorTridimensional vv; 
 	
 
-	public Volume(Control control, Volume_Viewer vv){
+	public Volume(Control control, VisualizadorTridimensional vv){
 		this.control = control;
 		this.vv = vv;
 		this.imp = vv.imp;

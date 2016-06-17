@@ -165,7 +165,7 @@ import java.util.Vector;
 	
 	void processFolder(String inputPath, String outputPath) {
 		String[] list = (new File(inputPath)).list();
-		list = FolderOpener.getFilteredList(list, filter, "Batch Processor");
+		list = IteradorDiretorio.getFilteredList(list, filter, "Batch Processor");
 		if (list==null)
 			return;
 		int index = 0;

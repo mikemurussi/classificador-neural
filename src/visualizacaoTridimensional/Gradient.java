@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.0
@@ -26,9 +26,9 @@ public class Gradient extends JPanel implements MouseListener, MouseMotionListen
 	private int wA=100;
 	private Control control;
 	private int[][] lut;
-	private Volume_Viewer vv;
+	private VisualizadorTridimensional vv;
 
-	public Gradient(Control control, Volume_Viewer vv, int width, int height) {
+	public Gradient(Control control, VisualizadorTridimensional vv, int width, int height) {
 		super();
 		
 		this.control = control;

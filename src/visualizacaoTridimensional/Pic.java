@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.01
@@ -25,12 +25,12 @@ public  class Pic {
 	private int[] pixels = null;		
 	private int width, height;
 	private Control control;
-	private Volume_Viewer vv;
+	private VisualizadorTridimensional vv;
 	byte[][][] volData3D = null; 
 
 	private Interpolation interpolation;
 
-	public Pic (Control control, Volume_Viewer vv, int width, int height){
+	public Pic (Control control, VisualizadorTridimensional vv, int width, int height){
 		this.control = control; 
 		this.vv = vv; 
 		this.width = width;

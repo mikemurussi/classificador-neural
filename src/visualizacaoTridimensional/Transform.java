@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.0

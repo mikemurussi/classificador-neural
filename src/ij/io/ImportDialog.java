@@ -9,7 +9,7 @@ import ij.gui.*;
 import ij.process.*;
 import ij.util.*;
 import ij.plugin.frame.Recorder;
-import ij.plugin.FolderOpener;
+import ij.plugin.IteradorDiretorio;
 import ij.plugin.FileInfoVirtualStack;
 import ij.measure.Calibration;
 
@@ -128,7 +128,7 @@ public class ImportDialog {
 	
 	/** Opens all the images in the directory. */
 	void openAll(String[] list, FileInfo fi) {
-		FolderOpener fo = new FolderOpener();
+		IteradorDiretorio fo = new IteradorDiretorio();
 		list = fo.trimFileList(list);
 		list = fo.sortFileList(list);
 		if (list==null) return;

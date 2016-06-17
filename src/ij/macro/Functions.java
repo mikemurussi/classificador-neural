@@ -2684,7 +2684,7 @@ public class Functions implements MacroConstants, Measurements {
 				}
 			} else {
 				if (f!=null&&f.isDirectory()) {
-					FolderOpener fo = new FolderOpener();
+					IteradorDiretorio fo = new IteradorDiretorio();
 					if (options!=null && options.contains("virtual"))
 						fo.openAsVirtualStack(true);
 					ImagePlus imp = fo.openFolder(path);

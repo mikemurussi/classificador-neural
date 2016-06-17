@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.0
@@ -134,14 +134,14 @@ public class Control {
 	float positionFactorY = 0.5f; // indicates the shown position of the yslice
 	float positionFactorZ = 0.5f; // indicates the shown position of the zslice
 	
-	private Volume_Viewer vv;
+	private VisualizadorTridimensional vv;
 
 	public boolean distWasSet;
 
 	public boolean isReady = false;
 
 	
-	public Control(Volume_Viewer volume_Viewer) {
+	public Control(VisualizadorTridimensional volume_Viewer) {
 		this.vv = volume_Viewer;
 	}
 

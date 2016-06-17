@@ -12,7 +12,7 @@ import ij.util.*;
 
 /** Implements the File/Import/Image Sequence command, which
 	opens a folder of images as a stack. */
-public class FolderOpener implements PlugIn {
+public class IteradorDiretorio implements PlugIn {
 
 	private static String[] excludedTypes = {".txt", ".lut", ".roi", ".pty", ".hdr", ".java", ".ijm", ".py", ".js", ".bsh", ".xml"};
 	private static boolean staticSortFileNames = true;
@@ -33,7 +33,7 @@ public class FolderOpener implements PlugIn {
 	/** Opens the images in the specified directory as a stack. Displays
 		directory chooser and options dialogs if the argument is null. */
 	public static ImagePlus open(String path) {
-		FolderOpener fo = new FolderOpener();
+		IteradorDiretorio fo = new IteradorDiretorio();
 		fo.saveImage = true;
 		fo.run(path);
 		return fo.image;
@@ -98,7 +98,7 @@ public class FolderOpener implements PlugIn {
 		if (title.endsWith(":"))
 			title = title.substring(0, title.length()-1);
 		
-		IJ.register(FolderOpener.class);
+		IJ.register(IteradorDiretorio.class);
 		list = trimFileList(list);
 		if (list==null) return;
 		if (IJ.debugMode) IJ.log("FolderOpener: "+directory+" ("+list.length+" files)");
@@ -607,6 +607,6 @@ public class FolderOpener implements PlugIn {
 	
 	} // FolderOpenerDialog
 
-} // FolderOpener
+} // IteradorDiretorio
 
 

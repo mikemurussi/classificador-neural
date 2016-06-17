@@ -1,7 +1,7 @@
 package redeneural.gui;
 
-import VolumeViewer.Volume_Viewer;
-import ij.plugin.FolderOpener;
+import visualizacaoTridimensional.VisualizadorTridimensional;
+import ij.plugin.IteradorDiretorio;
 import redeneural.classificador.ClassificadorImagem;
 import redeneural.mlp.Rede;
 import java.awt.BorderLayout;
@@ -50,7 +50,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private Backpropagation backpropagation;
     private final RedeJPanel redeJPanel = new RedeJPanel();
     private final AmostrasJPanel amostrasJPanel;
-    private final DelimitarAreaJPanel delimitarAreaJPanel;
     private final ClassesJPanel classesJPanel;
     private Grafico grafico;
     private boolean isTreinando = false;
@@ -74,7 +73,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
         this.projeto = new Projeto();
         this.amostrasJPanel = new AmostrasJPanel(projeto);
-        this.delimitarAreaJPanel = new DelimitarAreaJPanel(projeto);
         this.classesJPanel = new ClassesJPanel(projeto);
 
         this.lblTreinamentoIteracoes.setText(null);
@@ -83,7 +81,7 @@ public class MainJFrame extends javax.swing.JFrame {
         this.jTabbedPane.insertTab("Rede", null, this.redeJPanel, null, 1);
         this.jTabbedPane.insertTab("Classes", null, this.classesJPanel, null, 2);
         this.jTabbedPane.insertTab("Amostras", null, this.amostrasJPanel, null, 3);
-        this.jTabbedPane.insertTab("Delimitar Área", null, this.delimitarAreaJPanel, null, 7);
+        this.jTabbedPane.insertTab("Delimitar Área", null, new DelimitadorAreaPanel(projeto), null, 7);
         
         this.jTabbedPane.setSelectedIndex(0);
 
@@ -204,6 +202,10 @@ public class MainJFrame extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         btnClassificarSequenciaParar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        edtDestinoClassificacao1 = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        btnSelecionarDestinoClassificacao1 = new javax.swing.JButton();
         panelVolume = new javax.swing.JPanel();
         jLabel22 = new javax.swing.JLabel();
         edtSequenciaVolume = new javax.swing.JTextField();
@@ -648,7 +650,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setText("Destino das imagens classificadas");
+        jLabel12.setText("Destino imagens classificadas");
 
         btnSelecionarDestinoClassificacao.setText("Selecionar");
         btnSelecionarDestinoClassificacao.addActionListener(new java.awt.event.ActionListener() {
@@ -703,10 +705,26 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Volume Viewer");
+        jButton1.setText("Visualização 3D");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVolumeViewerActionPerformed(evt);
+                btnVisualizacao3DActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("Visualização 3D de Poros");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVisualizacao3DPorosActionPerformed(evt);
+            }
+        });
+
+        jLabel26.setText("Destino imagens classificadas poros");
+
+        btnSelecionarDestinoClassificacao1.setText("Selecionar");
+        btnSelecionarDestinoClassificacao1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelecionarDestinoClassificacaoPoroActionPerformed(evt);
             }
         });
 
@@ -725,19 +743,12 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addComponent(btnSelecionarImagemClassificar))
                     .addComponent(progressBarClassificacao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(panelClassificacaoLayout.createSequentialGroup()
-                        .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel11))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(edtDestinoClassificacao)
-                            .addComponent(edtSequenciaClassificar))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnSelecionarSequenciaClassificar, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnSelecionarDestinoClassificacao, javax.swing.GroupLayout.Alignment.TRAILING)))
-                    .addGroup(panelClassificacaoLayout.createSequentialGroup()
-                        .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelClassificacaoLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(lblClassificacaoDuracao))
+                            .addComponent(jLabel10)
+                            .addComponent(btnClassificar)
                             .addGroup(panelClassificacaoLayout.createSequentialGroup()
                                 .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel18, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -748,8 +759,7 @@ public class MainJFrame extends javax.swing.JFrame {
                                     .addComponent(lblClassificacaoInicio)
                                     .addComponent(lblClassificacaoFim)
                                     .addGroup(panelClassificacaoLayout.createSequentialGroup()
-                                        .addComponent(lblClassificacaoDuracao)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(12, 12, 12)
                                         .addComponent(jLabel21))))
                             .addComponent(chkMarcarFundo)
                             .addGroup(panelClassificacaoLayout.createSequentialGroup()
@@ -758,15 +768,35 @@ public class MainJFrame extends javax.swing.JFrame {
                                 .addComponent(lblCorFundo, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCorFundo))
-                            .addComponent(jLabel10)
-                            .addComponent(btnClassificar)
                             .addGroup(panelClassificacaoLayout.createSequentialGroup()
                                 .addComponent(btnClassificarSequencia)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnClassificarSequenciaParar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(jButton1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jButton2)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(panelClassificacaoLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel26)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel11))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelClassificacaoLayout.createSequentialGroup()
+                                .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(edtDestinoClassificacao)
+                                    .addComponent(edtSequenciaClassificar))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSelecionarSequenciaClassificar, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnSelecionarDestinoClassificacao, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(panelClassificacaoLayout.createSequentialGroup()
+                                .addComponent(edtDestinoClassificacao1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnSelecionarDestinoClassificacao1)))))
                 .addContainerGap())
         );
 
@@ -796,11 +826,17 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(jLabel12)
                     .addComponent(edtDestinoClassificacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSelecionarDestinoClassificacao))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(edtDestinoClassificacao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelecionarDestinoClassificacao1)
+                    .addComponent(jLabel26))
+                .addGap(17, 17, 17)
                 .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnClassificarSequencia)
                     .addComponent(btnClassificarSequenciaParar)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addComponent(chkMarcarFundo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -821,9 +857,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel20)
-                    .addComponent(lblClassificacaoDuracao)
                     .addComponent(jLabel21))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblClassificacaoDuracao)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         panelClassificacaoLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btnCorFundo, lblCorFundo});
@@ -1297,12 +1334,20 @@ public class MainJFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnCalcularVolumeActionPerformed
 
-    private void btnVolumeViewerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolumeViewerActionPerformed
-        FolderOpener fo = new FolderOpener();
+    private void btnVisualizacao3DActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizacao3DActionPerformed
+        IteradorDiretorio fo = new IteradorDiretorio();
         fo.run(this.fileChooserDiretorio != null && this.fileChooserDiretorio.getSelectedFile() != null ? (this.fileChooserDiretorio.getSelectedFile().getAbsolutePath()): null);
-        Volume_Viewer vv = new Volume_Viewer();
+        VisualizadorTridimensional vv = new VisualizadorTridimensional();
         vv.run(null);
-    }//GEN-LAST:event_btnVolumeViewerActionPerformed
+    }//GEN-LAST:event_btnVisualizacao3DActionPerformed
+
+    private void btnVisualizacao3DPorosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizacao3DPorosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVisualizacao3DPorosActionPerformed
+
+    private void btnSelecionarDestinoClassificacaoPoroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarDestinoClassificacaoPoroActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSelecionarDestinoClassificacaoPoroActionPerformed
 
     private void setProjeto(Projeto p) {
         this.projeto = p;
@@ -1354,6 +1399,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnSalvarProjeto;
     private javax.swing.JButton btnSalvarResultados;
     private javax.swing.JButton btnSelecionarDestinoClassificacao;
+    private javax.swing.JButton btnSelecionarDestinoClassificacao1;
     private javax.swing.JButton btnSelecionarImagemClassificar;
     private javax.swing.JButton btnSelecionarSequenciaClassificar;
     private javax.swing.JButton btnSelecionarSequenciaVolume;
@@ -1362,6 +1408,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkMarcarFundo;
     private javax.swing.JFormattedTextField edtCoeficienteAprendizado;
     private javax.swing.JTextField edtDestinoClassificacao;
+    private javax.swing.JTextField edtDestinoClassificacao1;
     private javax.swing.JTextField edtImagemClassificar;
     private javax.swing.JFormattedTextField edtLimiteErro;
     private javax.swing.JSpinner edtLimiteIteracoes;
@@ -1373,6 +1420,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JSpinner edtVoxelSizeY;
     private javax.swing.JSpinner edtVoxelSizeZ;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1391,6 +1439,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

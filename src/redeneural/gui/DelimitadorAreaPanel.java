@@ -1,8 +1,6 @@
 package redeneural.gui;
 
 import java.awt.BasicStroke;
-import redeneural.classificador.MascaraSelecaoBuilder;
-import redeneural.classificador.AmostraColetaBuilder;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -34,7 +32,7 @@ import redeneural.model.Projeto;
  *
  * @author Michael Murussi
  */
-public class DelimitarAreaPanel extends javax.swing.JPanel implements UpdateContent {
+public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateContent {
 
     private enum Ferramenta {
         CIRCLE, SQUARE
@@ -42,7 +40,6 @@ public class DelimitarAreaPanel extends javax.swing.JPanel implements UpdateCont
 
     private Projeto projeto;
     private List<Classe> classes;
-    private final DelimitarAreaJPanel amostrasPanel;
     private final ImageDisplay imageDisplay;
     private final JFileChooser fileChooserImage;
     private final JFileChooser fileChooserSelecao;
@@ -60,10 +57,9 @@ public class DelimitarAreaPanel extends javax.swing.JPanel implements UpdateCont
      * @param projeto
      * @param amostrasPanel
      */
-    public DelimitarAreaPanel(Projeto projeto, DelimitarAreaJPanel amostrasPanel) {
+    public DelimitadorAreaPanel(Projeto projeto) {
         initComponents();
         
-        this.amostrasPanel = amostrasPanel;
         setProjeto(projeto);
 
         this.fileChooserImage = FileChooserUtil.getNewImageFileChooser();
@@ -79,7 +75,7 @@ public class DelimitarAreaPanel extends javax.swing.JPanel implements UpdateCont
                 Graphics2D g = (Graphics2D) graphics.create();
 
                 if(pointStart != null && pointEnd != null) {
-                    if (ferramentaSelecionada.equals(DelimitarAreaPanel.Ferramenta.CIRCLE)) {
+                    if (ferramentaSelecionada.equals(DelimitadorAreaPanel.Ferramenta.CIRCLE)) {
                         Point p2 = new Point();
                         imageDisplay.transformPoint(pointStart, p2);
                         Point p3 = new Point();
@@ -96,7 +92,7 @@ public class DelimitarAreaPanel extends javax.swing.JPanel implements UpdateCont
                         g.drawOval(x, y, size * 2, size * 2);
                         
                         g.fillRect(p2.x - 1, p2.y - 1, 2, 2);
-                    } else if(ferramentaSelecionada.equals(DelimitarAreaPanel.Ferramenta.SQUARE)) {
+                    } else if(ferramentaSelecionada.equals(DelimitadorAreaPanel.Ferramenta.SQUARE)) {
                         Point p2 = new Point();
                         imageDisplay.transformPoint(pointStart, p2);
                         Point p3 = new Point();
@@ -307,7 +303,7 @@ public class DelimitarAreaPanel extends javax.swing.JPanel implements UpdateCont
             try {
                 abreImagem(fileChooserImage.getSelectedFile());
             } catch (IOException ex) {
-                Logger.getLogger(DelimitarAreaPanel.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(DelimitadorAreaPanel.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "Falha ao carregar imagem!\n" + ex.toString(), "Erro", JOptionPane.ERROR_MESSAGE);
             } finally {
                 setCursor(null);
@@ -365,61 +361,9 @@ public class DelimitarAreaPanel extends javax.swing.JPanel implements UpdateCont
     private javax.swing.JLabel lblPosicao;
     // End of variables declaration//GEN-END:variables
 
-    private void addClasse(String nome) {
-        Classe c = new Classe(nome);
-        c.setNeuronio(classes.size());
-        classes.add(c);
-        classesComboBoxModel.fireItemAdded(classes.size() - 1);
-        amostrasListModel.fireModelChanged();
-    }
-
-    private void removeClasse(int index) {
-        classes.remove(index);
-        classesComboBoxModel.fireItemRemoved(index);
-        amostrasListModel.fireModelChanged();
-    }
-
     private void abreImagem(File file) throws IOException {
         image = ImageIO.read(file);
         this.imageDisplay.setImage(image);
-    }
-
-    private void salvaSelecao(File file) throws IOException {
-        SelecaoClasseWriter writer = new SelecaoClasseWriter(classes);
-        writer.write(file);
-    }
-
-    private void abreSelecao(File file) throws IOException {
-
-        SelecaoClasseReader reader = new SelecaoClasseReader(classes);
-        List<Classe> list = reader.load(file);
-        classes.clear();
-        classes.addAll(list);
-
-        classesComboBoxModel.fireContentsChanged();
-        amostrasListModel.fireModelChanged();
-    }
-
-    private void importaMascaraSelecao(File selectedFile) throws IOException {
-
-        MascaraSelecaoBuilder builder = new MascaraSelecaoBuilder();
-        List<Classe> list = builder.build(selectedFile);
-
-        classes.clear();
-        classes.addAll(list);
-
-        classesComboBoxModel.fireContentsChanged();
-        amostrasListModel.fireModelChanged();
-    }
-
-    private void gerarAmostras(int percValidacao) {
-
-        AmostraColetaBuilder builder = new AmostraColetaBuilder(projeto);
-        builder.setPercValidacao((double) percValidacao / 100.0d);
-        builder.build(image, classes);
-        this.amostrasPanel.setAmostrasTreinamento(builder.getAmostrasTreinamento());
-        this.amostrasPanel.setAmostrasValidacao(builder.getAmostrasValidacao());
-
     }
 
     private void updateStatusBar(Point p) {

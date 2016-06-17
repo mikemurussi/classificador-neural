@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.0
@@ -27,9 +27,9 @@ public class TFrgb extends JPanel implements MouseListener, MouseMotionListener 
 	
 	private Control control;
 
-	private Volume_Viewer vv;
+	private VisualizadorTridimensional vv;
 	
-	public TFrgb(Control control, Volume_Viewer vv) {
+	public TFrgb(Control control, VisualizadorTridimensional vv) {
 		super();
 		this.control = control;
 		this.vv = vv;

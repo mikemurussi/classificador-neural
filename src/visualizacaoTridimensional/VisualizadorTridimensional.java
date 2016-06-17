@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.01
@@ -28,7 +28,7 @@ import java.util.StringTokenizer;
 
 import javax.swing.JFrame;
 
-public final class Volume_Viewer implements PlugIn {
+public final class VisualizadorTridimensional implements PlugIn {
 	//private static String volumePath = "/Users/barthel/Applications/ImageJ/_images/_stacks/16x16x16cube0.tif"; //2.tif
 	//private static String volumePath = "/Users/barthel/Applications/ImageJ/_images/_stacks/mri-stack_k.tif";
 	private static String volumePath = "/Users/barthel/Applications/ImageJ/_images/_stacks/engine.zip";
@@ -74,7 +74,7 @@ public final class Volume_Viewer implements PlugIn {
 	public static void main(String args[]) {
 		//new ImageJ(); // open the ImageJ window to see images and results
 		
-		Volume_Viewer vv = new Volume_Viewer();
+		VisualizadorTridimensional vv = new VisualizadorTridimensional();
 		IJ.open(volumePath);
 		vv.run("");
 	}
@@ -278,7 +278,7 @@ public final class Volume_Viewer implements PlugIn {
 		control.interpolationMode = (int) Prefs.get("VolumeViewer.interpolationMode", control.interpolationMode);
 		control.backgroundColor =  new Color((int)Prefs.get("VolumeViewer.backgroundColor", control.backgroundColor.getRGB()));
 		control.lutNr = (int) Prefs.get("VolumeViewer.lutNr", control.lutNr);
-		//control.zAspect = (float) Prefs.get("VolumeViewer.zAspect", control.zAspect);
+		//control.zAspect = (float) Prefs.get("VisualizadorTridimensional.zAspect", control.zAspect);
 		control.sampling = (float) Prefs.get("VolumeViewer.sampling", control.sampling);
 		control.dist = (float) Prefs.get("VolumeViewer.dist", control.dist);
 		control.showAxes = Prefs.get("VolumeViewer.showAxes", control.showAxes);
@@ -312,7 +312,7 @@ public final class Volume_Viewer implements PlugIn {
 			Prefs.set("VolumeViewer.interpolationMode", control.interpolationMode);
 			Prefs.set("VolumeViewer.backgroundColor", control.backgroundColor.getRGB());
 			Prefs.set("VolumeViewer.lutNr", control.lutNr);
-			//Prefs.set("VolumeViewer.zAspect", control.zAspect);
+			//Prefs.set("VisualizadorTridimensional.zAspect", control.zAspect);
 			Prefs.set("VolumeViewer.sampling", control.sampling);
 			Prefs.set("VolumeViewer.dist", control.dist);
 			Prefs.set("VolumeViewer.showAxes", control.showAxes);

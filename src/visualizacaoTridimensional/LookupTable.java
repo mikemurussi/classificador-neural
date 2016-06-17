@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.0
@@ -20,9 +20,9 @@ public class LookupTable {
 	final int[][]   lut = new int[256][3];
 	final int[][][] lut2D_2 = new int[256][128][3];
 	final int[][][] lut2D_3 = new int[256][128][3];
-	private Volume_Viewer vv;
+	private VisualizadorTridimensional vv;
 
-	LookupTable(Control control, Volume_Viewer vv) {
+	LookupTable(Control control, VisualizadorTridimensional vv) {
 		this.control = control;
 		this.vv = vv;
 		colors = new int[256];

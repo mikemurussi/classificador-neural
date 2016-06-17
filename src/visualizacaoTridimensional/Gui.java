@@ -1,4 +1,4 @@
-package VolumeViewer;
+package visualizacaoTridimensional;
 
 /*
  * Volume Viewer 2.0
@@ -95,7 +95,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 	Pic picSlice = null;
  
 	private Control control;
-	private Volume_Viewer vv;
+	private VisualizadorTridimensional vv;
 
 	private JCheckBox checkLight;
 
@@ -115,7 +115,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 
 	private JSlider objectLightSlider;
 	
-	public Gui(Control control, Volume_Viewer vv) {
+	public Gui(Control control, VisualizadorTridimensional vv) {
 		this.control = control;
 		this.vv = vv;
 	}
