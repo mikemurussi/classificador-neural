@@ -176,10 +176,10 @@ class ImageRegion extends JPanel {
 		else
 			g2d.setColor(Color.white);
 
-		g2d.drawString("Volume Viewer", width - 100, height - 10); 
+		g2d.drawString("Visualizador Tridimensional", width - 100, height - 10); 
 		g2d.dispose();
 
-		String s = "Volume_Viewer_"+plotNumber;
+		String s = "Visualizador_Tridimensional_"+plotNumber;
 
 		ImagePlus plotImage = NewImage.createRGBImage (s, width, height, 1, NewImage.FILL_BLACK);
 

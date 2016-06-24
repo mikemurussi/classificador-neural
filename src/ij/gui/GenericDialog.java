@@ -47,7 +47,7 @@ FocusListener, ItemListener, KeyListener, AdjustmentListener, WindowListener {
 	protected Component theLabel;
 	private Button cancel, okay, no, help;
 	private String okLabel = "  OK  ";
-	private String cancelLabel = "Cancel";
+	private String cancelLabel = "Cancelar";
 	private String helpLabel = "Help";
     private boolean wasCanceled, wasOKed;
     private int y;
