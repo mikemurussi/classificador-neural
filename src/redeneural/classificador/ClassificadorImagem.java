@@ -11,6 +11,7 @@ import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import redeneural.mlp.AreaDelimitada;
 import redeneural.util.FileUtil;
 import redeneural.util.ImageUtil;
 import redeneural.mlp.Neuronio;
@@ -35,6 +36,7 @@ public final class ClassificadorImagem implements Runnable {
     private final boolean removerFundo;
     private final int qtdCanaisAtivos;
     private final boolean[] canaisAtivos;
+    private final AreaDelimitada areaDelimitada;
     
     public ClassificadorImagem(Projeto projeto, File imageIn, File imageOut, Color corFundo, boolean removerFundo) throws CloneNotSupportedException {
         this.rede = (Rede)projeto.getRede().clone();
@@ -48,6 +50,7 @@ public final class ClassificadorImagem implements Runnable {
         this.canaisAtivos = projeto.getCanaisAtivos();
         this.corFundo = corFundo;
         this.removerFundo = removerFundo;
+        this.areaDelimitada = projeto.getAreaDelimitada();
     }
 
     public void classifica(File imageIn, File imageOut) throws IOException {
@@ -138,51 +141,61 @@ public final class ClassificadorImagem implements Runnable {
     private void removeFundo(int[] data, int h, int w) {
         final int rgbFundo = corFundo.getRGB();
         
-        // bordas não classificadas são consideradas fundo
-        for (int j = 0; j < w; j++) {
-            // borda superior
-            for (int i = 0; i < vizinhos; i++) {
-                data[w * i + j] = rgbFundo;
+        if(this.areaDelimitada.getTipo() != null) {
+            for(int i = 0; i < data.length; i++) {
+                int x = i % w;
+                int y = i / w;
+                if(!this.areaDelimitada.isArea(x, y)) {
+                    data[i] = rgbFundo;
+                }
             }
-            // borda inferior
-            for (int i = (h - vizinhos) - 1; i < h; i++) {
-                data[w * i + j] = rgbFundo;
+        } else {
+            // bordas não classificadas são consideradas fundo
+            for (int j = 0; j < w; j++) {
+                // borda superior
+                for (int i = 0; i < vizinhos; i++) {
+                    data[w * i + j] = rgbFundo;
+                }
+                // borda inferior
+                for (int i = (h - vizinhos) - 1; i < h; i++) {
+                    data[w * i + j] = rgbFundo;
+                }
             }
-        }
-        for (int i = 0; i < h; i++) {
-            // borda esquerda
-            for (int j = 0; j < vizinhos; j++) {
-                data[w * i + j] = rgbFundo;
+            for (int i = 0; i < h; i++) {
+                // borda esquerda
+                for (int j = 0; j < vizinhos; j++) {
+                    data[w * i + j] = rgbFundo;
+                }
+                // borda direita
+                for (int j = (w - vizinhos) - 1; j < w; j++) {
+                    data[w * i + j] = rgbFundo;
+                }
             }
-            // borda direita
-            for (int j = (w - vizinhos) - 1; j < w; j++) {
-                data[w * i + j] = rgbFundo;
-            }
-        }
-        
-        // marca fundo a partir do canto superior esquerdo
-        Point point = new Point(vizinhos, vizinhos);
-        Stack<Point> stack = new Stack<>();
-        stack.push(point);
 
-        Point[] vizinhanca = new Point[8];
-        for (int i=0; i < vizinhanca.length; i++) {
-            vizinhanca[i] = new Point();
-        }
+            // marca fundo a partir do canto superior esquerdo
+            Point point = new Point(vizinhos, vizinhos);
+            Stack<Point> stack = new Stack<>();
+            stack.push(point);
 
-        final int rgb = data[w * point.y + point.x];
-        int px;
-        
-        while (!stack.empty()) {
-            Point p = stack.pop();
+            Point[] vizinhanca = new Point[8];
+            for (int i=0; i < vizinhanca.length; i++) {
+                vizinhanca[i] = new Point();
+            }
 
-            setVizinhanca(p, vizinhanca);
-            for (Point pv : vizinhanca) {
-                if ((pv.x >= 0) && (pv.x < w) && (pv.y >= 0) && (pv.y < h)) {
-                    px = data[w * pv.y + pv.x];
-                    if (px == rgb && px != rgbFundo) {
-                        stack.push(new Point(pv));
-                        data[w * pv.y + pv.x] = rgbFundo;
+            final int rgb = data[w * point.y + point.x];
+            int px;
+
+            while (!stack.empty()) {
+                Point p = stack.pop();
+
+                setVizinhanca(p, vizinhanca);
+                for (Point pv : vizinhanca) {
+                    if ((pv.x >= 0) && (pv.x < w) && (pv.y >= 0) && (pv.y < h)) {
+                        px = data[w * pv.y + pv.x];
+                        if (px == rgb && px != rgbFundo) {
+                            stack.push(new Point(pv));
+                            data[w * pv.y + pv.x] = rgbFundo;
+                        }
                     }
                 }
             }

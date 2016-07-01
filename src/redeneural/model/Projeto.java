@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import redeneural.mlp.AreaDelimitada;
 import redeneural.mlp.Rede;
 
 /**
@@ -18,6 +19,7 @@ public class Projeto implements Serializable {
     private Color corIndeciso;
     private int vizinhos;
     private final boolean[] canaisAtivos;
+    private AreaDelimitada areaDelimitada;
 
     public Projeto() {
         this.classes = new ArrayList<>();
@@ -25,6 +27,7 @@ public class Projeto implements Serializable {
         this.corIndeciso = new Color(255, 0, 0);
         this.vizinhos = 1;
         this.canaisAtivos = new boolean[]{false, false, true};
+        this.areaDelimitada = new AreaDelimitada();
     }
 
     public Rede getRede() {
@@ -79,4 +82,11 @@ public class Projeto implements Serializable {
         return i;
     }
 
+    public AreaDelimitada getAreaDelimitada() {
+        return areaDelimitada;
+    }
+
+    public void setAreaDelimitada(AreaDelimitada areaDelimitada) {
+        this.areaDelimitada = areaDelimitada;
+    }
 }

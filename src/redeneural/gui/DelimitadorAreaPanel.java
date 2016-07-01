@@ -23,8 +23,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ListModel;
-import redeneural.io.SelecaoClasseReader;
-import redeneural.io.SelecaoClasseWriter;
+import redeneural.mlp.AreaDelimitada;
 import redeneural.model.Classe;
 import redeneural.model.Projeto;
 
@@ -32,30 +31,20 @@ import redeneural.model.Projeto;
  *
  * @author Michael Murussi
  */
-public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateContent {
-
-    private enum Ferramenta {
-        CIRCLE, SQUARE
-    };
-
+public class DelimitadorAreaPanel extends javax.swing.JPanel {
     private Projeto projeto;
-    private List<Classe> classes;
     private final ImageDisplay imageDisplay;
     private final JFileChooser fileChooserImage;
     private final JFileChooser fileChooserSelecao;
-    private BufferedImage image;    
-    private ClassesComboBoxModel classesComboBoxModel;
-    private AmostrasListModel amostrasListModel;
+    private BufferedImage image;
     private Point pointStart;
     private Point pointEnd;
-
-    private Ferramenta ferramentaSelecionada;
+    private AreaDelimitada ad;
 
     /**
      * Creates new form ColetaAmostraPanel
      *
      * @param projeto
-     * @param amostrasPanel
      */
     public DelimitadorAreaPanel(Projeto projeto) {
         initComponents();
@@ -74,8 +63,8 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
                 
                 Graphics2D g = (Graphics2D) graphics.create();
 
-                if(pointStart != null && pointEnd != null) {
-                    if (ferramentaSelecionada.equals(DelimitadorAreaPanel.Ferramenta.CIRCLE)) {
+                if(pointStart != null && pointEnd != null && ad.getTipo() != null) {
+                    if (ad.getTipo().equals(AreaDelimitada.Tipo.CIRCULO)) {
                         Point p2 = new Point();
                         imageDisplay.transformPoint(pointStart, p2);
                         Point p3 = new Point();
@@ -92,7 +81,10 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
                         g.drawOval(x, y, size * 2, size * 2);
                         
                         g.fillRect(p2.x - 1, p2.y - 1, 2, 2);
-                    } else if(ferramentaSelecionada.equals(DelimitadorAreaPanel.Ferramenta.SQUARE)) {
+                        
+                        ad.setPontoOrigem(p2);
+                        ad.setTamanho(size * size);
+                    } else if (ad.getTipo().equals(AreaDelimitada.Tipo.RETANGULO)) {
                         Point p2 = new Point();
                         imageDisplay.transformPoint(pointStart, p2);
                         Point p3 = new Point();
@@ -100,9 +92,11 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
 
                         g.setColor(Color.red);
                         g.setStroke(new BasicStroke(4));
-                        int x = Math.min(p2.x, p3.x);
-                        int y = Math.min(p2.y, p3.y);
-                        g.drawRect(p2.x, p2.y, Math.abs(p3.x - p2.x), Math.abs(p3.y - p2.y));
+                        p3.x = Math.abs(p3.x - p2.x);
+                        p3.y = Math.abs(p3.y - p2.y);
+                        g.drawRect(p2.x, p2.y, p3.x, p3.y);
+                        
+                        ad.setPontos(p2, p3);
                     }
                 }
 
@@ -132,7 +126,6 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
                 imageDisplay.restorePoint(e.getPoint(), p);
                 pointEnd = p;
                 
-                amostrasListModel.fireModelChanged();
                 imageDisplay.repaint();
             }
 
@@ -149,15 +142,12 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
 
                 switch (e.getButton()) {
                     case MouseEvent.BUTTON1:
-                        if (ferramentaSelecionada.equals(Ferramenta.CIRCLE)) {
-                            pointStart = p;
-                        } else if(ferramentaSelecionada.equals(Ferramenta.SQUARE)) {
+                        if(ad.getTipo() != null) {
                             pointStart = p;
                         }
                         break;
                 }
                 
-                amostrasListModel.fireModelChanged();
                 imageDisplay.repaint();
             }
         });
@@ -168,18 +158,13 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
         lblPixelColor.setOpaque(true);
         lblPixelColor.setPreferredSize(new Dimension(21, 21));
 
-        this.ferramentaSelecionada = Ferramenta.CIRCLE;
+        this.setFerramentaSelecionada(this.ad.getTipo());
         btnPixelTool.setSelected(true);
     }
 
     public final void setProjeto(Projeto projeto) {
         this.projeto = projeto;
-        this.classes = projeto.getClasses();
-
-        // configura classes
-        classesComboBoxModel = new ClassesComboBoxModel(classes);
-
-        amostrasListModel = new AmostrasListModel(classes);
+        this.ad = projeto.getAreaDelimitada();
     }
 
     /**
@@ -313,11 +298,11 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
     }//GEN-LAST:event_btnAbrirImagemActionPerformed
 
     private void btnCircleToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCircleToolActionPerformed
-        setFerramentaSelecionada(Ferramenta.CIRCLE);
+        setFerramentaSelecionada(AreaDelimitada.Tipo.CIRCULO);
     }//GEN-LAST:event_btnCircleToolActionPerformed
 
     private void btnLimparSelecaoAtualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparSelecaoAtualActionPerformed
-
+        setFerramentaSelecionada(null);
     }//GEN-LAST:event_btnLimparSelecaoAtualActionPerformed
 
     private void edtZoomActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtZoomActionPerformed
@@ -334,14 +319,12 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
     }//GEN-LAST:event_edtZoomActionPerformed
 
     private void btnSquareToolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSquareToolActionPerformed
-        setFerramentaSelecionada(Ferramenta.SQUARE);
+        setFerramentaSelecionada(AreaDelimitada.Tipo.RETANGULO);
     }//GEN-LAST:event_btnSquareToolActionPerformed
 
-    private void setFerramentaSelecionada(Ferramenta ferramentaSelecionada) {
-        if (!this.ferramentaSelecionada.equals(ferramentaSelecionada)) {
-            this.ferramentaSelecionada = ferramentaSelecionada;
-            imageDisplay.repaint();
-        }
+    private void setFerramentaSelecionada(AreaDelimitada.Tipo tipo) {
+        this.ad.setTipo(tipo);
+        imageDisplay.repaint();
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -376,12 +359,6 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel implements UpdateCo
             lblPixel.setText(String.format("(R %d, G %d, B %d)", r, g, b));
             lblPixelColor.setBackground(new Color(rgb));
         }
-    }
-
-    @Override
-    public void updateContent() {
-        this.classesComboBoxModel.fireContentsChanged();
-        this.amostrasListModel.fireModelChanged();
     }
 
     private final class AmostrasListModel extends AbstractListModel<String> implements ListModel<String> {

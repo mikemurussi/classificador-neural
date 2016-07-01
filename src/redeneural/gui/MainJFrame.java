@@ -51,6 +51,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private final RedeJPanel redeJPanel = new RedeJPanel();
     private final AmostrasJPanel amostrasJPanel;
     private final ClassesJPanel classesJPanel;
+    private final DelimitadorAreaPanel delimitadorAreaPanel;
     private Grafico grafico;
     private boolean isTreinando = false;
     private final JFileChooser fileChooser;
@@ -74,6 +75,7 @@ public class MainJFrame extends javax.swing.JFrame {
         this.projeto = new Projeto();
         this.amostrasJPanel = new AmostrasJPanel(projeto);
         this.classesJPanel = new ClassesJPanel(projeto);
+        this.delimitadorAreaPanel = new DelimitadorAreaPanel(projeto);
 
         this.lblTreinamentoIteracoes.setText(null);
         this.lblTreinamentoEMQ.setText(null);
@@ -81,7 +83,7 @@ public class MainJFrame extends javax.swing.JFrame {
         this.jTabbedPane.insertTab("Rede", null, this.redeJPanel, null, 1);
         this.jTabbedPane.insertTab("Classes", null, this.classesJPanel, null, 2);
         this.jTabbedPane.insertTab("Amostras", null, this.amostrasJPanel, null, 3);
-        this.jTabbedPane.insertTab("Delimitar Área", null, new DelimitadorAreaPanel(projeto), null, 7);
+        this.jTabbedPane.insertTab("Delimitar Área", null, this.delimitadorAreaPanel, null, 7);
         
         this.jTabbedPane.setSelectedIndex(0);
 
@@ -1355,6 +1357,7 @@ public class MainJFrame extends javax.swing.JFrame {
         redeJPanel.setProjeto(projeto);
         classesJPanel.setProjeto(projeto);
         amostrasJPanel.setProjeto(projeto);
+        delimitadorAreaPanel.setProjeto(projeto);
     }
 
     private void setCorFundo(Color c) {
