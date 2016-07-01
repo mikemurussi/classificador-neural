@@ -57,6 +57,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private final JFileChooser fileChooser;
     private final JFileChooser fileChooserImage;
     private final JFileChooser fileChooserDiretorio;
+    private final JFileChooser fileChooserDiretorioPoro;
     private final JFileChooser fileChooserProjeto;
     private Color corFundo;
     private boolean interromperClassificacao;
@@ -100,6 +101,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
         this.fileChooserDiretorio = new JFileChooser();
         this.fileChooserDiretorio.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        
+        this.fileChooserDiretorioPoro = new JFileChooser();
+        this.fileChooserDiretorioPoro.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
         this.fileChooserProjeto = FileChooserUtil.getNewFileChooser(FileChooserUtil.FILE_FILTER_PROJETO);
 
@@ -205,7 +209,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnClassificarSequenciaParar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        edtDestinoClassificacao1 = new javax.swing.JTextField();
+        edtDestinoClassificacaoPoro = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         btnSelecionarDestinoClassificacao1 = new javax.swing.JButton();
         panelVolume = new javax.swing.JPanel();
@@ -796,7 +800,7 @@ public class MainJFrame extends javax.swing.JFrame {
                                     .addComponent(btnSelecionarSequenciaClassificar, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(btnSelecionarDestinoClassificacao, javax.swing.GroupLayout.Alignment.TRAILING)))
                             .addGroup(panelClassificacaoLayout.createSequentialGroup()
-                                .addComponent(edtDestinoClassificacao1)
+                                .addComponent(edtDestinoClassificacaoPoro)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnSelecionarDestinoClassificacao1)))))
                 .addContainerGap())
@@ -830,7 +834,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(btnSelecionarDestinoClassificacao))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(panelClassificacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(edtDestinoClassificacao1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(edtDestinoClassificacaoPoro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSelecionarDestinoClassificacao1)
                     .addComponent(jLabel26))
                 .addGap(17, 17, 17)
@@ -1344,11 +1348,16 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVisualizacao3DActionPerformed
 
     private void btnVisualizacao3DPorosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualizacao3DPorosActionPerformed
-        // TODO add your handling code here:
+        IteradorDiretorio fo = new IteradorDiretorio();
+        fo.run(this.fileChooserDiretorioPoro != null && this.fileChooserDiretorioPoro.getSelectedFile() != null ? (this.fileChooserDiretorioPoro.getSelectedFile().getAbsolutePath()): null);
+        VisualizadorTridimensional vv = new VisualizadorTridimensional();
+        vv.run(null);
     }//GEN-LAST:event_btnVisualizacao3DPorosActionPerformed
 
     private void btnSelecionarDestinoClassificacaoPoroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarDestinoClassificacaoPoroActionPerformed
-        // TODO add your handling code here:
+        if (this.fileChooserDiretorioPoro.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            edtDestinoClassificacaoPoro.setText(fileChooserDiretorioPoro.getSelectedFile().getAbsolutePath());
+        }
     }//GEN-LAST:event_btnSelecionarDestinoClassificacaoPoroActionPerformed
 
     private void setProjeto(Projeto p) {
@@ -1411,7 +1420,7 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox chkMarcarFundo;
     private javax.swing.JFormattedTextField edtCoeficienteAprendizado;
     private javax.swing.JTextField edtDestinoClassificacao;
-    private javax.swing.JTextField edtDestinoClassificacao1;
+    private javax.swing.JTextField edtDestinoClassificacaoPoro;
     private javax.swing.JTextField edtImagemClassificar;
     private javax.swing.JFormattedTextField edtLimiteErro;
     private javax.swing.JSpinner edtLimiteIteracoes;

@@ -785,7 +785,7 @@
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="edtDestinoClassificacao1" max="32767" attributes="0"/>
+                                      <Component id="edtDestinoClassificacaoPoro" max="32767" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="btnSelecionarDestinoClassificacao1" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -823,7 +823,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="edtDestinoClassificacao1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="edtDestinoClassificacaoPoro" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnSelecionarDestinoClassificacao1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -1028,7 +1028,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVisualizacao3DPorosActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JTextField" name="edtDestinoClassificacao1">
+            <Component class="javax.swing.JTextField" name="edtDestinoClassificacaoPoro">
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel26">
               <Properties>
