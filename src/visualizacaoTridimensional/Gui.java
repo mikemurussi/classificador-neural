@@ -64,11 +64,11 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 	private float scaleSliderValue; 
 
 	private JLabel zAspectLabel;
-	private String zAspectString = "z-Aspect:";
+	private String zAspectString = "Eixo z:";
 	private JTextField tfZaspect;
 
 	private JLabel samplingLabel;
-	private String samplingString = "Sampling:";
+	private String samplingString = "Amostragem:";
 	private JTextField tfSampling;
 
 	private int xStart, yStart, xAct, yAct;
@@ -228,7 +228,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		upperButtonPanel = new JPanel();
 		//upperButtonPanel.setLayout(new GridLayout(1,0));
 
-		String renderString = "Mode:";
+		String renderString = "Modo:";
 		JLabel renderLabel = new JLabel(renderString);
 		upperButtonPanel.add(renderLabel);
 		renderChoice = new JComboBox(Control.renderName);
@@ -238,7 +238,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		renderChoice.setPreferredSize(new Dimension(160,24)); 
 		upperButtonPanel.add(renderChoice);
 
-		String interpolationString = "Interpolation:";
+		String interpolationString = "Interpolação:";
 		JLabel interpolationLabel = new JLabel(interpolationString);
 		upperButtonPanel.add(interpolationLabel);
 		interpolationChoice = new JComboBox(Control.interpolationName);
@@ -291,10 +291,10 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		miniPanelSampling.add(tfSampling);
 		upperButtonPanel.add(miniPanelSampling);
 
-		JButton buttonBackgroundColor = new JButton("Background");
+		JButton buttonBackgroundColor = new JButton("Fundo");
 		buttonBackgroundColor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Color bgColor = JColorChooser.showDialog(null, "Choose background color", null);
+				Color bgColor = JColorChooser.showDialog(null, "Escolha a cor de fundo", null);
 				if (bgColor != null){
 					control.backgroundColor = bgColor;
 					imageRegion.setPlaneColor(bgColor);
@@ -304,7 +304,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		});
 		upperButtonPanel.add(buttonBackgroundColor); 
 
-		JButton buttonSaveView = new JButton("Snapshot");
+		JButton buttonSaveView = new JButton("Foto");
 		buttonSaveView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				imageRegion.saveToImage();
@@ -313,7 +313,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		upperButtonPanel.add(buttonSaveView); 
 		
 		
-		JButton buttonReset = new JButton("Reset");
+		JButton buttonReset = new JButton("Resetar");
 		buttonReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				vv.reset();
@@ -344,7 +344,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		imageLEDRegion.setImage(picLED.image);
 		imageLEDRegion.repaint();
 		
-		String textOnButton = (control.showTF) ?"<html><body><center>Hide<br>TF</center></body></html>" :
+		String textOnButton = (control.showTF) ?"<html><body><center>Esconder<br>TF</center></body></html>" :
 			"<html><body><center>Show<br>TF</center></body></html>";
 		JButton tfButton = new JButton(textOnButton);
 		tfButton.setMargin(new Insets(0,-30, 0,-30));
@@ -366,7 +366,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		distLabel1 = new JLabel(""+ control.dist);
 		distLabel1.setHorizontalAlignment(SwingConstants.CENTER);
 		distLabel1.setPreferredSize(new Dimension(control.windowWidthSliderRegion, 15));
-		distLabel2 = new JLabel("Distance");
+		distLabel2 = new JLabel("Distância");
 		distLabel2.setFont(new Font("Sans", Font.PLAIN, 11));
 		distLabel2.setHorizontalAlignment(SwingConstants.CENTER);
 		distLabel2.setPreferredSize(new Dimension(control.windowWidthSliderRegion, 15));
@@ -389,7 +389,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		scaleLabel1 = new JLabel(scaleString);
 		scaleLabel1.setHorizontalAlignment(SwingConstants.CENTER);
 		scaleLabel1.setPreferredSize(new Dimension(control.windowWidthSliderRegion, 15));
-		scaleLabel2 = new JLabel("Scale");
+		scaleLabel2 = new JLabel("Escala");
 		scaleLabel2.setHorizontalAlignment(SwingConstants.CENTER);
 		scaleLabel2.setPreferredSize(new Dimension(control.windowWidthSliderRegion, 15));
 
@@ -498,7 +498,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		transferFunctionPanel = new JPanel();
 		
 		transferFunctionPanel.setPreferredSize(new Dimension(280,650));
-		JLabel tfLabel = new JLabel("Transfer Function (TF): Color & Alpha");
+		JLabel tfLabel = new JLabel("Função de Transferência (FT): Cor e Alpha");
 		transferFunctionPanel.add(tfLabel);
 		
 		lutChoice = new JComboBox(Control.lutName);
@@ -508,7 +508,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		lutChoice.addActionListener(this);
 		transferFunctionPanel.add(lutChoice);
 
-		JLabel rgbLabel = new JLabel("Draw LUT");
+		JLabel rgbLabel = new JLabel("Desenho LUT");
 		transferFunctionPanel.add(rgbLabel);
 
 		JRadioButton rgbButton = new JRadioButton("RGB");
@@ -551,7 +551,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		JPanel tfPanel1D = new JPanel();
 		tfPanel1D.setPreferredSize(new Dimension(256, 240));
 
-		JLabel alphaLabel = new JLabel("Draw the alpha graph of the 1D-TF(lum)");
+		JLabel alphaLabel = new JLabel("Desenhe o gráfico alpha 1D-TF(lum)");
 		alphaLabel.setFont(new Font("Sans", Font.PLAIN, 12));
 		tfPanel1D.add(alphaLabel);
 		JLabel alphaLabel1 = new JLabel("                                      ");
@@ -560,7 +560,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		
 
 		alphaSlider1 = new JSlider(0, 300, 150);
-		alphaSlider1.setBorder( new TitledBorder(empty, "global alpha offset", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
+		alphaSlider1.setBorder( new TitledBorder(empty, "Compensação do alfa", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
 
 		alphaSlider1.addChangeListener( this );
 		alphaSlider1.addMouseListener(this);
@@ -580,7 +580,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 			}
 		});
 		tfPanel1D.add(autobutton1);
-		clearbutton1 = new JButton("clear");
+		clearbutton1 = new JButton("Limpar");
 		clearbutton1.setMargin(new java.awt.Insets(1, 1, 1, 1));
 		clearbutton1.setFont(new Font("Sans", Font.PLAIN, 12));
 		clearbutton1.setPreferredSize(new Dimension(50,20));
@@ -599,17 +599,17 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		JPanel tfPanel2D = new JPanel();
 		tfPanel2D.setPreferredSize(new Dimension(256, 240));
 
-		alphaLabel = new JLabel("Pick alpha (& color) and draw the 2D-");
+		alphaLabel = new JLabel("Escolha alfa e a cor para o 2D-");
 		alphaLabel.setFont(new Font("Sans", Font.PLAIN, 12));
 		tfPanel2D.add(alphaLabel);
-		alphaLabel1 = new JLabel("TF(lum,grad). Draw with Alt key to erase.");
-		alphaLabel1.setFont(new Font("Sans", Font.PLAIN, 12));
+		alphaLabel1 = new JLabel("TF(lum,grad). Click com a tecla ALT para apagar.");
+		alphaLabel1.setFont(new Font("Sans", Font.PLAIN, 10));
 		tfPanel2D.add(alphaLabel1);
 
 		vv.gradient2 = new Gradient(control, vv, 150, 18);
 		tfPanel2D.add(vv.gradient2);
 
-		checkPickColor2 = new JCheckBox("pick color");
+		checkPickColor2 = new JCheckBox("Escolher Cor");
 		checkPickColor2.setSelected(control.pickColor);
 		checkPickColor2.setHorizontalAlignment(JCheckBox.CENTER);
 		checkPickColor2.addItemListener (this);
@@ -619,7 +619,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 
 		tfPanel2D.add(vv.tf_a2);
 		alphaSlider2 = new JSlider(0, 300, 150);
-		alphaSlider2.setBorder( new TitledBorder(empty, "global alpha offset", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
+		alphaSlider2.setBorder( new TitledBorder(empty, "Compensação do alfa", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
 		alphaSlider2.addChangeListener( this );
 		alphaSlider2.addMouseListener(this);
 		alphaSlider2.setPreferredSize(new Dimension(140, 30));
@@ -643,7 +643,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 			}
 		});
 		tfPanel2D.add(autobutton2);
-		clearbutton2 = new JButton("clear");
+		clearbutton2 = new JButton("Limpar");
 		clearbutton2.setMargin(new java.awt.Insets(1, 1, 1, 1));
 		clearbutton2.setFont(new Font("Sans", Font.PLAIN, 12));
 		clearbutton2.setPreferredSize(new Dimension(50,20));
@@ -662,17 +662,17 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		JPanel tfPanel2DLH = new JPanel();
 		tfPanel2DLH.setPreferredSize(new Dimension(256, 240));
 
-		alphaLabel = new JLabel("Pick alpha (& color) and draw the 2D-");
+		alphaLabel = new JLabel("Escolha alfa e a cor para o 2D-");
 		alphaLabel.setFont(new Font("Sans", Font.PLAIN, 12));
 		tfPanel2DLH.add(alphaLabel);
-		alphaLabel1 = new JLabel("TF(mean,diff). Draw with Alt key to erase.");
-		alphaLabel1.setFont(new Font("Sans", Font.PLAIN, 12));
+		alphaLabel1 = new JLabel("TF(mean,diff). Click com a tecla ALT para apagar.");
+		alphaLabel1.setFont(new Font("Sans", Font.PLAIN, 10));
 		tfPanel2DLH.add(alphaLabel1);
 
 		vv.gradient3 = new Gradient(control, vv, 150, 18);
 		tfPanel2DLH.add(vv.gradient3);
 
-		checkPickColor3 = new JCheckBox("pick color");
+		checkPickColor3 = new JCheckBox("Escolher Cor");
 		checkPickColor3.setSelected(control.pickColor);
 		checkPickColor3.setHorizontalAlignment(JCheckBox.CENTER);
 		checkPickColor3.addItemListener (this);
@@ -681,7 +681,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 
 		tfPanel2DLH.add(vv.tf_a3);
 		alphaSlider3 = new JSlider(0, 300, 150);
-		alphaSlider3.setBorder( new TitledBorder(empty, "global alpha offset", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
+		alphaSlider3.setBorder( new TitledBorder(empty, "Compensação do alfa", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
 		alphaSlider3.addChangeListener( this );
 		alphaSlider3.addMouseListener(this);
 		alphaSlider3.setPreferredSize(new Dimension(140, 30));
@@ -705,7 +705,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 			}
 		});
 		tfPanel2DLH.add(autobutton3);
-		clearbutton3 = new JButton("clear");
+		clearbutton3 = new JButton("Limpar");
 		clearbutton3.setMargin(new java.awt.Insets(1, 1, 1, 1));
 		clearbutton3.setFont(new Font("Sans", Font.PLAIN, 12));
 		clearbutton3.setPreferredSize(new Dimension(50,20));
@@ -728,19 +728,19 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		JPanel textLabels = new JPanel();
 		textLabels.setLayout(new GridLayout(6,1));
 
-		JLabel alphaLabel4a = new JLabel("Pick alpha (& color) values and click", JLabel.LEFT);
+		JLabel alphaLabel4a = new JLabel("Escolha alfa e cor, clicando no valor ", JLabel.LEFT);
 		alphaLabel4a.setFont(new Font("Sans", Font.PLAIN, 12));
 		textLabels.add(alphaLabel4a);
-		JLabel alphaLabel4b = new JLabel("the slice images on the left to assign", JLabel.LEFT);
+		JLabel alphaLabel4b = new JLabel("das imagens de corte à esquerda para atribuir", JLabel.LEFT);
 		alphaLabel4b.setFont(new Font("Sans", Font.PLAIN, 12));
 		textLabels.add(alphaLabel4b);
-		JLabel alphaLabel4c = new JLabel("these values to connected similar", JLabel.LEFT);
+		JLabel alphaLabel4c = new JLabel("esses valores para semelhantes", JLabel.LEFT);
 		alphaLabel4c.setFont(new Font("Sans", Font.PLAIN, 12));
 		textLabels.add(alphaLabel4c);
-		JLabel alphaLabel4d = new JLabel("regions of the volume = 3D-TF(x,y,z)", JLabel.LEFT);
+		JLabel alphaLabel4d = new JLabel("regiões de volume = 3D-TF(x,y,z)", JLabel.LEFT);
 		alphaLabel4d.setFont(new Font("Sans", Font.PLAIN, 12));
 		textLabels.add(alphaLabel4d);
-		JLabel alphaLabel4e = new JLabel("Alt-click to erase.", JLabel.LEFT);
+		JLabel alphaLabel4e = new JLabel("Click ALT para limpar.", JLabel.LEFT);
 		alphaLabel4e.setFont(new Font("Sans", Font.PLAIN, 12));
 		textLabels.add(alphaLabel4e);
 		JLabel alphaLabel4f = new JLabel("                                       ");
@@ -757,13 +757,13 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		sliderBox2.setLayout(new GridLayout(1,2));
 
 		sliderLumTolerance = new JSlider(0, 128, control.lumTolerance);
-		sliderLumTolerance.setBorder( new TitledBorder(empty, "luminance tolerance", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
+		sliderLumTolerance.setBorder( new TitledBorder(empty, "Tolerância de luminância", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
 		sliderLumTolerance.addChangeListener( this );
 		sliderLumTolerance.setPreferredSize(new Dimension(135, 30));
 		sliderBox2.add(sliderLumTolerance);
 
 		sliderGradTolerance = new JSlider(0, 128, control.gradTolerance);
-		sliderGradTolerance.setBorder( new TitledBorder(empty, "gradient tolerance", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
+		sliderGradTolerance.setBorder( new TitledBorder(empty, "Tolerância de Gradiente", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
 		sliderGradTolerance.addChangeListener( this );
 		sliderGradTolerance.setPreferredSize(new Dimension(135, 30));
 		sliderBox2.add(sliderGradTolerance);			
@@ -771,13 +771,13 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		tfPanelPaint.add(sliderBox2);
 
 		alphaSlider4 = new JSlider(0, 300, 150);
-		alphaSlider4.setBorder( new TitledBorder(empty, "global alpha offset", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
+		alphaSlider4.setBorder( new TitledBorder(empty, "Compensação do alfa", TitledBorder.CENTER, TitledBorder.BELOW_BOTTOM, new Font("Sans", Font.PLAIN, 10)));
 		alphaSlider4.addChangeListener( this );
 		alphaSlider4.addMouseListener(this);
 		alphaSlider4.setPreferredSize(new Dimension(140, 30));
 		tfPanelPaint.add(alphaSlider4);
 
-		clearbutton4 = new JButton("clear");
+		clearbutton4 = new JButton("Limpar");
 		clearbutton4.setMargin(new java.awt.Insets(1, 1, 1, 1));
 		clearbutton4.setFont(new Font("Sans", Font.PLAIN, 12));
 		clearbutton4.setPreferredSize(new Dimension(50,20));
@@ -834,7 +834,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		lightSliderBoxR.setLayout(new GridLayout(5,1));
 		lightSliderBoxL.setLayout(new GridLayout(5,1));
 		
-		JLabel jl1 = new JLabel("object color", SwingConstants.RIGHT);
+		JLabel jl1 = new JLabel("Cor", SwingConstants.RIGHT);
 		jl1.setFont(new Font("Sans", Font.PLAIN, 10));
 		lightSliderBoxL.add(jl1);
 		objectLightSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int) (50*control.objectLightValue)); 
@@ -843,7 +843,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		objectLightSlider.setEnabled(control.useLight);
 		lightSliderBoxR.add(objectLightSlider);
 		
-		JLabel jl2 = new JLabel("ambient", SwingConstants.RIGHT);
+		JLabel jl2 = new JLabel("Ambiente", SwingConstants.RIGHT);
 		jl2.setFont(new Font("Sans", Font.PLAIN, 10));
 		lightSliderBoxL.add(jl2);
 		ambientSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int) (control.ambientValue*100)); 
@@ -852,7 +852,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		ambientSlider.setEnabled(control.useLight);
 		lightSliderBoxR.add(ambientSlider);	
 		
-		JLabel jl3 = new JLabel("diffuse", SwingConstants.RIGHT);
+		JLabel jl3 = new JLabel("Difuso", SwingConstants.RIGHT);
 		jl3.setFont(new Font("Sans", Font.PLAIN, 10));
 		lightSliderBoxL.add(jl3);
 		diffuseSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int) (control.diffuseValue*100)); 
@@ -861,7 +861,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		diffuseSlider.setEnabled(control.useLight);
 		lightSliderBoxR.add(diffuseSlider);	
 		
-		JLabel jl4 = new JLabel("specular", SwingConstants.RIGHT);
+		JLabel jl4 = new JLabel("Especular", SwingConstants.RIGHT);
 		jl4.setFont(new Font("Sans", Font.PLAIN, 10));
 		lightSliderBoxL.add(jl4);
 		specularSlider = new JSlider(JSlider.HORIZONTAL, 0, 100, (int) (control.specularValue*100)); 
@@ -870,7 +870,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		specularSlider.setEnabled(control.useLight);
 		lightSliderBoxR.add(specularSlider);	
 		
-		JLabel jl5 = new JLabel("shine", SwingConstants.RIGHT);
+		JLabel jl5 = new JLabel("Brilho", SwingConstants.RIGHT);
 		jl5.setFont(new Font("Sans", Font.PLAIN, 10));
 		lightSliderBoxL.add(jl5);
 		int val = (int) (200*Math.pow(control.shineValue/400, 1/3f)-20);
@@ -882,7 +882,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		lightSliderBoxR.add(shineSlider);	
 		
 		
-		checkLight = new JCheckBox("Light");
+		checkLight = new JCheckBox("Leveza");
 		checkLight.setSelected(control.useLight);
 		//checkLight.setHorizontalAlignment(JCheckBox.RIGHT);
 		checkLight.addItemListener (this);
@@ -905,7 +905,7 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 		lightBoxLeft.add(checkLight, BorderLayout.NORTH);
 		lightBoxLeft.add(lightRegion, BorderLayout.CENTER);
 		
-		jLabelLight = new JLabel("<html>Drag sphere <P>to change<P> direction, <P> double click<P> to change <P>color of light.</html>");
+		jLabelLight = new JLabel("<html>Arraste a esfera<P>para mudar<P>de direção,<P>click duas vezes<P>para mudar<P>a cor da luz.</html>");
 		lightBoxLeft.add(jLabelLight, BorderLayout.WEST);
 		//jLabelLight.setVisible(control.light == 1);
 		jLabelLight.setFont(new Font("SANS", Font.PLAIN, 10));
@@ -955,9 +955,9 @@ MouseListener, MouseMotionListener, ChangeListener, ActionListener, ItemListener
 
 	public void setPositionText(int wx, int wy, int wz) {
 		int xs = 10, ys = 14;  /// !!
-		sliceImageRegion.setText("xy slice  z=" + positionZ, 0, xs, wy+ys-3, 0, Color.black, 1);
-		sliceImageRegion.setText("yz slice  x=" + positionX, 1, xs, wy+wz+2*ys-3, 0, Color.black, 1);
-		sliceImageRegion.setText("xz slice  y=" + positionY, 2, xs, wy+2*wz+3*ys-3, 0, Color.black, 1);		
+		sliceImageRegion.setText("xy corte  z=" + positionZ, 0, xs, wy+ys-3, 0, Color.black, 1);
+		sliceImageRegion.setText("yz corte  x=" + positionX, 1, xs, wy+wz+2*ys-3, 0, Color.black, 1);
+		sliceImageRegion.setText("xz corte  y=" + positionY, 2, xs, wy+2*wz+3*ys-3, 0, Color.black, 1);		
 	}
 	
 	private JSpinner makeSpinner(float value) {

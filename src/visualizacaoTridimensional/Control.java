@@ -34,10 +34,10 @@ public class Control {
 //		"Volume" 
 //	};
 	final static String [] renderName = { 
-		"Slice (0)", 
-		"Slice & Borders (1)", 
-		"Max Projection (2)", 
-		"Projection (3)", 
+		"Fatia (0)", 
+		"Fatia & Bordas (1)", 
+		"Max Projeção (2)", 
+		"Projeção (3)", 
 		"Volume (4)" 
 	};
 	
@@ -55,8 +55,8 @@ public class Control {
 	static final String [] interpolationName = { 
 		"Nearest Neighbor (0)", 
 		"Trilinear (1)",
-		"Tricubic smooth (2)",
-		"Tricubic sharp (3)"
+		"Tricubic Suave (2)",
+		"Tricubic Detalhado (3)"
 	};
 	
 	// transfer function modes 
@@ -68,10 +68,10 @@ public class Control {
 	
 	static final String [] lutName = { 
 		"Original (0)", 
-		"Grayscale (1)", 
-		"Spectrum LUT (2)", 
-		"Fire LUT (3)", 
-		"Thermal LUT (4)"}; 
+		"Escala Cinza (1)", 
+		"Espectro LUT (2)", 
+		"Escala Vermelha LUT (3)", 
+		"Térmico LUT (4)"}; 
 
 	
 	// stored vaiables (in prefs) //////////////////

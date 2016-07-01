@@ -146,7 +146,7 @@ public final class VisualizadorTridimensional implements PlugIn {
 			cleanup();
 		}
 		else {
-			frame = new JFrame("Volume Viewer " +  version + " ");
+			frame = new JFrame("Visualizador Tridimensional " +  version + " ");
 			frame.setLocation(control.xloc,control.yloc);
 			frame.addWindowListener(new WindowAdapter() {
 				public void windowClosing(WindowEvent e) {

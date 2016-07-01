@@ -363,17 +363,17 @@ public class IteradorDiretorio implements PlugIn {
 	
 	boolean showDialog(ImagePlus imp, String[] list) {
 		int fileCount = list.length;
-		FolderOpenerDialog gd = new FolderOpenerDialog("Sequence Options", imp, list);
-		gd.addNumericField("Number of images:", fileCount, 0);
-		gd.addNumericField("Starting image:", 1, 0);
-		gd.addNumericField("Increment:", 1, 0);
-		gd.addNumericField("Scale images:", scale, 0, 4, "%");
-		gd.addStringField("File name contains:", "", 10);
+		FolderOpenerDialog gd = new FolderOpenerDialog("Opções", imp, list);
+		gd.addNumericField("Número de Imagens:", fileCount, 0);
+		gd.addNumericField("Imagem inicial:", 1, 0);
+		gd.addNumericField("Incremento:", 1, 0);
+		gd.addNumericField("Escala:", scale, 0, 4, "%");
+		gd.addStringField("Nome do arquivo:", "", 10);
 		gd.setInsets(0,45,0);
-		gd.addMessage("(enclose regex in parens)", null, Color.darkGray);
-		gd.addCheckbox("Convert_to_RGB", convertToRGB);
-		gd.addCheckbox("Sort names numerically", sortFileNames);
-		gd.addCheckbox("Use virtual stack", openAsVirtualStack);
+		gd.addMessage("(anexar regex em parens)", null, Color.darkGray);
+		gd.addCheckbox("Converter_para_RGB", convertToRGB);
+		gd.addCheckbox("Classificar nomes numericamente", sortFileNames);
+		gd.addCheckbox("Usar pilha virtual", openAsVirtualStack);
 		gd.addMessage("10000 x 10000 x 1000 (100.3MB)");
 		gd.addHelp(IJ.URL+"/docs/menus/file.html#seq1");
 		gd.setSmartRecording(true);

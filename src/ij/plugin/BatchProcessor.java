@@ -109,7 +109,7 @@ import java.util.Vector;
 		gd.setInsets(0, 0, 5);
 		gd.addChoice("Add Macro Code:", code, code[0]);
 		if (virtualStack==null)
-			gd.addStringField("File name contains:", "", 10);
+			gd.addStringField("Nome do arquivo:", "", 10);
 		gd.setInsets(15, 10, 0);
 		Dimension screen = IJ.getScreenSize();
 		gd.addTextAreas(macro, null, screen.width<=600?10:15, 60);
