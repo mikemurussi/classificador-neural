@@ -55,8 +55,9 @@ public class AreaDelimitada implements Serializable {
     }
     
     public void setPontos(Point pontoOrigem, Point pontoFinal) {
-        this.pontoOrigem = new Point();
-        this.pontoFinal = new Point();
+        this.pontoOrigem = pontoOrigem;
+        this.pontoFinal = pontoFinal;
+        /*
         if(pontoOrigem.x < pontoFinal.x) {
             this.pontoOrigem.x = pontoOrigem.x;
             this.pontoFinal.x = pontoFinal.x;
@@ -74,6 +75,7 @@ public class AreaDelimitada implements Serializable {
         if(this.tipo.equals(AreaDelimitada.Tipo.CIRCULO)) {
             this.tamanho = (this.pontoOrigem.x - this.pontoFinal.x) * (this.pontoOrigem.x - this.pontoFinal.x) + (this.pontoOrigem.y - this.pontoFinal.y) * (this.pontoOrigem.y - this.pontoFinal.y);
         }
+        */
     }
     
     public Boolean isArea(int x, int y) {

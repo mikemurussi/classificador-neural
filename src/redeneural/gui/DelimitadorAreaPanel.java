@@ -92,9 +92,9 @@ public class DelimitadorAreaPanel extends javax.swing.JPanel {
 
                         g.setColor(Color.red);
                         g.setStroke(new BasicStroke(4));
-                        p3.x = Math.abs(p3.x - p2.x);
-                        p3.y = Math.abs(p3.y - p2.y);
-                        g.drawRect(p2.x, p2.y, p3.x, p3.y);
+                        g.drawRect(p2.x, p2.y, Math.abs(p3.x - p2.x), Math.abs(p3.y - p2.y));
+                        p3.x = p2.x + Math.abs(p3.x - p2.x);
+                        p3.y = p2.y + Math.abs(p3.y - p2.y);
                         
                         ad.setPontos(p2, p3);
                     }
