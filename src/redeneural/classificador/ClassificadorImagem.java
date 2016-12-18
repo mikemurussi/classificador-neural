@@ -27,6 +27,7 @@ public final class ClassificadorImagem implements Runnable {
 
     private final File imageIn;
     private final File imageOut;
+    private final File imageOutPoro;
     private final Rede rede;
     private final List<Classe> classes;
     private final int vizinhos;
@@ -38,7 +39,7 @@ public final class ClassificadorImagem implements Runnable {
     private final boolean[] canaisAtivos;
     private final AreaDelimitada areaDelimitada;
     
-    public ClassificadorImagem(Projeto projeto, File imageIn, File imageOut, Color corFundo, boolean removerFundo) throws CloneNotSupportedException {
+    public ClassificadorImagem(Projeto projeto, File imageIn, File imageOut, Color corFundo, boolean removerFundo, File imageOutPoro) throws CloneNotSupportedException {
         this.rede = (Rede)projeto.getRede().clone();
         this.classes = projeto.getClasses();
         this.vizinhos = projeto.getVizinhos();
@@ -46,6 +47,7 @@ public final class ClassificadorImagem implements Runnable {
         this.corIndeciso = projeto.getCorIndeciso();
         this.imageIn = imageIn;
         this.imageOut = imageOut;
+        this.imageOutPoro = imageOutPoro;
         this.qtdCanaisAtivos = projeto.getQuantidadeCanaisAtivos();
         this.canaisAtivos = projeto.getCanaisAtivos();
         this.corFundo = corFundo;
@@ -53,12 +55,16 @@ public final class ClassificadorImagem implements Runnable {
         this.areaDelimitada = projeto.getAreaDelimitada();
     }
 
-    public void classifica(File imageIn, File imageOut) throws IOException {
+    public void classifica(File imageIn, File imageOut, File imageOutPoro) throws IOException {
 
         BufferedImage a = ImageIO.read(imageIn);
         BufferedImage b = new BufferedImage(a.getWidth(), a.getHeight(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage c = null;
+        if(imageOutPoro != null) {
+            c = new BufferedImage(a.getWidth(), a.getHeight(), BufferedImage.TYPE_INT_RGB);
+        }
 
-        classifica(a, b);
+        classifica(a, b, c);
 
         String formato;
         if (FileUtil.getFileExtension(imageOut).equalsIgnoreCase("tif")) {
@@ -68,14 +74,24 @@ public final class ClassificadorImagem implements Runnable {
         }
 
         ImageIO.write(b, formato, imageOut);
-
+        if(imageOutPoro != null) {
+            ImageIO.write(c, formato, imageOutPoro);
+        }
     }
 
-    public void classifica(BufferedImage imageIn, BufferedImage imageOut) {
+    public void classifica(BufferedImage imageIn, BufferedImage imageOut, BufferedImage imageOutPoro) {
 
         int[] dataIn = ImageUtil.loadImageData(imageIn);
         int[] dataOut = new int[dataIn.length];
         Arrays.fill(dataOut, Color.white.getRGB());
+        int[] dataOutPoro = null;
+        if(imageOutPoro != null) {
+            dataOutPoro = new int[dataIn.length];
+            Arrays.fill(dataOutPoro, Color.white.getRGB());
+        }
+        int[] dataOutNovo = null;
+        dataOutNovo = new int[dataIn.length];
+        Arrays.fill(dataOutNovo, Color.white.getRGB());
 
         int qtdEntradas = ((vizinhos * 2 + 1) * (vizinhos * 2 + 1)) * qtdCanaisAtivos;
 
@@ -123,8 +139,21 @@ public final class ClassificadorImagem implements Runnable {
 
                 if (neuronioVencedor > -1) {
                     dataOut[w * i + j] = mapeamentoNeuronioClasse[neuronioVencedor].getCor().getRGB();
+                    if(imageOutPoro != null) {
+                        if(neuronioVencedor == 0) {
+                            dataOutPoro[w * i + j] = corFundo.getRGB();
+                            dataOutNovo[w * i + j] = mapeamentoNeuronioClasse[neuronioVencedor].getCor().getRGB();
+                        } else {
+                            dataOutPoro[w * i + j] = mapeamentoNeuronioClasse[neuronioVencedor].getCor().getRGB();
+                            dataOutNovo[w * i + j] = mapeamentoNeuronioClasse[neuronioVencedor].getCor().getRGB();
+                        }
+                    }
                 } else {
                     dataOut[w * i + j] = corIndeciso.getRGB();
+                    dataOutNovo[w * i + j] = corIndeciso.getRGB();
+                    if(imageOutPoro != null) {
+                        dataOutPoro[w * i + j] = corIndeciso.getRGB();
+                    }
                 }
 
             }
@@ -134,8 +163,10 @@ public final class ClassificadorImagem implements Runnable {
             removeFundo(dataOut, h, w);
         }
 
-        ImageUtil.saveImageData(imageOut, dataOut);
-
+        ImageUtil.saveImageData(imageOut, dataOutNovo);
+        if(imageOutPoro != null) {
+            ImageUtil.saveImageData(imageOutPoro, dataOutPoro);
+        }
     }
 
     private void removeFundo(int[] data, int h, int w) {
@@ -221,7 +252,7 @@ public final class ClassificadorImagem implements Runnable {
     @Override
     public void run() {
         try {
-            classifica(imageIn, imageOut);
+            classifica(imageIn, imageOut, imageOutPoro);
         } catch (IOException ex) {
             Logger.getLogger(ClassificadorImagem.class.getName()).log(Level.SEVERE, null, ex);
         }

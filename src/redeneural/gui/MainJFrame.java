@@ -1075,8 +1075,8 @@ public class MainJFrame extends javax.swing.JFrame {
             long start = System.currentTimeMillis();
             setTempoClassificacao(start, 0);
 
-            ClassificadorImagem classificador = new ClassificadorImagem(projeto, null, null, corFundo, marcarFundo);
-            classificador.classifica(imageIn, imageOut);
+            ClassificadorImagem classificador = new ClassificadorImagem(projeto, null, null, corFundo, marcarFundo, null);
+            classificador.classifica(imageIn, imageOut, null);
 
             long stop = System.currentTimeMillis();
             setTempoClassificacao(start, stop);
@@ -1124,6 +1124,12 @@ public class MainJFrame extends javax.swing.JFrame {
             destino = new File(edtDestinoClassificacao.getText());
         } else {
             destino = null;
+        }
+        final File destinoPoro;
+        if (edtDestinoClassificacaoPoro.getText() != null && !edtDestinoClassificacaoPoro.getText().isEmpty()) {
+            destinoPoro = new File(edtDestinoClassificacaoPoro.getText());
+        } else {
+            destinoPoro = null;
         }
         
         if (image == null) {
@@ -1182,8 +1188,12 @@ public class MainJFrame extends javax.swing.JFrame {
 
                     for (File imageIn: list) {
                         File imageOut = new File(destino, imageIn.getName());
+                        File imageOutPoro = null;
+                        if(destinoPoro != null) {
+                            imageOutPoro = new File(destinoPoro, imageIn.getName());
+                        }
 
-                        ClassificadorImagem classificador = new ClassificadorImagem(projeto, imageIn, imageOut, corFundo, marcarFundo);
+                        ClassificadorImagem classificador = new ClassificadorImagem(projeto, imageIn, imageOut, corFundo, marcarFundo, imageOutPoro);
                         executor.execute(classificador);
                     }
                     executor.shutdown();
